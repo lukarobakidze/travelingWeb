@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TravelBloom – Travel Recommendations</title>
+
+  <style>
+    /* --- Reset / base --- */
+    * { box-sizing: border-box; }
+    :root {
+      --blue-500:#0ea5e9;
+      --blue-400:#38bdf8;
+      --slate-900:#0f172a;
+      --slate-700:#334155;
+      --slate-600:#475569;
+      --slate-200:#e2e8f0;
+      --slate-100:#f1f5f9;
+      --bg:#f8fafc;
+      --green:#22c55e;
+      --green-700:#16a34a;
+    }
+    body { margin:0; font-family: 'Segoe UI', Tahoma, sans-serif; background:var(--bg); color:var(--slate-900); }
+
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 0 12px; }
+    .row { display:flex; align-items:center; gap:12px; padding:12px 0; }
+    .spacer { flex:1; }
+    .muted { color:var(--slate-600); font-size:.95rem; }
+
+    /* --- Navbar --- */
+    header { background: linear-gradient(90deg, var(--blue-400), var(--blue-500)); color:white; position:sticky; top:0; z-index:10; }
+    nav a { text-decoration:none; color:white; padding:6px 12px; border-radius:6px; font-weight:500; }
+    nav a:hover, nav a.active { background:rgba(255,255,255,.18); }
+
+    input[type="text"]{ padding:6px 10px; border:1px solid var(--slate-200); border-radius:6px; min-width:240px; }
+    button { padding:6px 12px; border:none; border-radius:6px; cursor:pointer; font-weight:500; }
+    button.primary { background:var(--blue-500); color:white; }
+    button.secondary { background:white; color:var(--blue-500); border:1px solid var(--blue-500); }
+
+    /* --- Sections --- */
+    main section { display:none; padding: 32px 12px; max-width: 1000px; margin: 0 auto; }
+    main section.active { display:block; }
+
+    /* --- Home hero --- */
+    .hero { background: linear-gradient(90deg, var(--blue-400), var(--blue-500)); color:white; padding:60px 20px; border-radius:12px; text-align:center; }
+    .hero h1 { font-size:2.5rem; margin:0 0 12px; }
+    .hero p { font-size:1.05rem; margin:0 0 16px; }
+    .hero .book { background:var(--green); }
+    .hero .book:hover { background:var(--green-700); }
+
+    /* --- Grids / cards --- */
+    .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card { background:white; border:1px solid var(--slate-200); border-radius:10px; padding:16px; box-shadow:0 2px 6px rgba(0,0,0,.05); }
+    .card img { width:100%; height:160px; object-fit:cover; border-radius:6px; margin-bottom:10px; background:var(--slate-100); }
+
+    /* --- Contact form --- */
+    form label { display:block; margin-top:12px; font-weight:600; }
+    form input, form textarea { width:100%; padding:8px; margin-top:4px; border:1px solid var(--slate-200); border-radius:6px; background:white; }
+    form button { margin-top:12px; }
+  </style>
+</head>
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <header>
+    <div class="wrap">
+      <div class="row">
+        <strong style="font-size:1.05rem;">TravelBloom</strong>
+
+        <nav>
+          <a href="#home" id="link-home" class="active">Home</a>
+          <a href="#about" id="link-about">About Us</a>
+          <a href="#contact" id="link-contact">Contact Us</a>
+        </nav>
+
+        <div class="spacer"></div>
+
+        <!-- Search (Home only) -->
+        <div id="search-bar">
+          <input id="searchInput" type="text" placeholder="Enter destination or keyword" />
+          <button id="searchBtn" class="primary">Search</button>
+          <button id="clearBtn" class="secondary">Clear</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== HOME ===== -->
+    <section id="home" class="active">
+      <div class="wrap">
+        <div class="hero">
+          <h1>Explore Dream Destination</h1>
+          <p>Discover places around the world. Search by <em>beach</em>, <em>temple</em>, or a <em>country</em> name.</p>
+          <button class="book" onclick="location.hash='#about'">Book Now</button>
+        </div>
+
+        <h2 style="margin:22px 0 8px;">Recommendations</h2>
+        <p class="muted">Type a keyword like “beach”, “temple”, or a country name (e.g., Japan).</p>
+        <div id="results" class="grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about">
+      <div class="wrap">
+        <h1>About Us</h1>
+        <p class="muted">We’re a small team that loves crafting simple travel recommendations using open JSON data.</p>
+
+        <h2 style="margin-top:18px;">Our Team</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Jane Wilson</h3>
+            <div class="muted">CEO</div>
+            <p>Leads strategy and partnerships.</p>
+          </div>
+          <div class="card">
+            <h3>Chris Evans</h3>
+            <div class="muted">Team Lead</div>
+            <p>Designs curated experiences.</p>
+          </div>
+          <div class="card">
+            <h3>Mike Tyson</h3>
+            <div class="muted">Delivery Head</div>
+            <p>Ensures smooth operations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+      <div class="wrap">
+        <h1>Contact Us</h1>
+        <form id="contactForm" onsubmit="event.preventDefault(); alert('Submitted!');">
+          <label for="name">Name</label>
+          <input id="name" type="text" required />
+
+          <label for="email">Email</label>
+          <input id="email" type="email" required />
+
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" required></textarea>
+
+          <button type="submit" class="primary">Submit</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="./travel_recommendation.js"></script>
+</body>
+</html>
